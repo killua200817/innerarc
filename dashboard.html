@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnerArc - Story Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-item {
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #4facfe;
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        /* Dashboard Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* Current Arc Section */
+        .arc-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arc-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #4facfe;
+        }
+
+        .arc-progress {
+            margin-top: 30px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            width: 65%;
+            box-shadow: 0 0 15px rgba(79, 172, 254, 0.5);
+        }
+
+        /* Quest List */
+        .quest-list {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quest-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .quest-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #4facfe;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quest-checkbox.done {
+            background: #4facfe;
+        }
+
+        /* Mood Calendar */
+        .mood-calendar {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .day-hopeful { background: #ffd700; opacity: 0.6; }
+        .day-determined { background: #4facfe; opacity: 0.6; }
+        .day-anxious { background: #ff6b6b; opacity: 0.4; }
+
+        /* Story Feed */
+        .feed {
+            margin-top: 40px;
+        }
+
+        .feed-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .feed-date {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <h2 style="color: #4facfe; margin-bottom: 30px; text-align: center;">InnerArc</h2>
+        <a href="dashboard.html" class="nav-item active">🏠 Dashboard</a>
+        <a href="#" class="nav-item">⚔️ Quests</a>
+        <a href="#" class="nav-item">🌙 Sanctuary</a>
+        <a href="#" class="nav-item">📖 Archives</a>
+        <a href="#" class="nav-item">🌸 Connections</a>
+        <a href="index.html" class="nav-item" style="margin-top: auto;">🚪 Logout</a>
+    </nav>
+
+    <main class="content">
+        <div class="header">
+            <h1>Good morning, Wanderer ✨</h1>
+            <div class="user-stats">
+                <div class="stat-box">LVL <span class="stat-value">12</span></div>
+                <div class="stat-box">EXP <span class="stat-value">2,450 / 3,000</span></div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="left-col">
+                <section class="arc-card">
+                    <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; opacity: 0.7;">Current Story Arc</p>
+                    <h2 class="arc-title">The Awakening of Purpose</h2>
+                    <p style="opacity: 0.9; line-height: 1.6;">
+                        You are currently in the mid-stage of your "Growth Arc". The challenges you face today will define the climax of this season. Keep moving forward!
+                    </p>
+                    <div class="arc-progress">
+                        <span>Arc Completion: 65%</span>
+                        <div class="progress-bar"><div class="progress-fill"></div></div>
+                    </div>
+                </section>
+
+                <div class="feed">
+                    <h3>Narrative History</h3>
+                    <div class="feed-item">
+                        <p class="feed-date">February 4, 2026</p>
+                        <p>Unlocked the "Deep Focus" trait after completing a 4-hour study quest. Your character gains +5 Wisdom.</p>
+                    </div>
+                    <div class="feed-item">
+                        <p class="feed-date">February 2, 2026</p>
+                        <p>Navigated through a "Restless Night" scene. You chose to prioritize self-care, triggering the "Healer's Path" branch.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-col">
+                <section class="quest-list">
+                    <h3>Active Quests</h3>
+                    <div class="quest-item">
+                        <div class="quest-checkbox done"></div>
+                        <span>Morning Reflection 🧘</span>
+                    </div>
+                    <div class="quest-item">
+                        <div class="quest-checkbox"></div>
+                        <span>Hydration Mission (3/3L) 💧</span>
+                    </div>
+                    <div class="quest-item">
+                        <div class="quest-checkbox"></div>
+                        <span>Deep Work Block (90m) 💻</span>
+                    </div>
+                    <div class="quest-item">
+                        <div class="quest-checkbox"></div>
+                        <span>Outdoor Sanctuary Visit 🌳</span>
+                    </div>
+                </section>
+
+                <section class="mood-calendar" style="margin-top: 30px;">
+                    <h3>Energy Map</h3>
+                    <div class="calendar-grid">
+                        <div class="calendar-day day-hopeful"></div>
+                        <div class="calendar-day day-determined"></div>
+                        <div class="calendar-day day-hopeful"></div>
+                        <div class="calendar-day day-anxious"></div>
+                        <div class="calendar-day day-determined"></div>
+                        <div class="calendar-day day-hopeful"></div>
+                        <div class="calendar-day day-determined"></div>
+                        <!-- Current row -->
+                        <div class="calendar-day day-hopeful"></div>
+                        <div class="calendar-day" style="border: 2px solid #4facfe;"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
