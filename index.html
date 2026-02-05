@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnerArc - Your Story Begins</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: #0a0e27;
+            color: #fff;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a6f);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255,107,107,0.6);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .story-section {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #0a0e27 0%, #1a1f3a 100%);
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .floating-city {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .districts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .district-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .district-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 15px 40px rgba(79,172,254,0.3);
+        }
+
+        .district-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .district-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #4facfe;
+        }
+
+        .district-desc {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .character-section {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1a1f3a 0%, #2d1b4e 100%);
+            padding: 100px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .character-creator {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .avatar-preview {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            box-shadow: 0 10px 40px rgba(102,126,234,0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .mood-tracker {
+            margin-top: 50px;
+        }
+
+        .mood-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .mood-btn {
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .mood-btn:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #4facfe;
+            transform: scale(1.1);
+        }
+
+        .footer {
+            background: #0a0e27;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer p {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero" id="hero">
+        <div class="stars" id="stars"></div>
+        <div class="hero-content">
+            <h1 class="logo">✨ InnerArc</h1>
+            <p class="tagline">Transform Your Life Into An Epic Anime Story</p>
+            <button class="cta-button" onclick="scrollToSection('story')">Begin Your Journey</button>
+        </div>
+        <div class="scroll-indicator">
+            <span style="font-size: 2rem;">↓</span>
+        </div>
+    </section>
+
+    <section class="story-section" id="story">
+        <div class="floating-city">
+            <h2 class="section-title">Welcome to Your Inner Universe</h2>
+            <p style="font-size: 1.2rem; opacity: 0.9; max-width: 800px; margin: 0 auto;">
+                InnerArc transforms your daily life into an evolving anime narrative. Every mood, goal, and challenge becomes part of your personal story arc.
+            </p>
+            
+            <div class="districts">
+                <div class="district-card">
+                    <div class="district-icon">🌙</div>
+                    <h3 class="district-title">Mental Sanctuary</h3>
+                    <p class="district-desc">Track your emotions and turn them into narrative moments. Your feelings become the weather of your inner world.</p>
+                </div>
+                
+                <div class="district-card">
+                    <div class="district-icon">⚔️</div>
+                    <h3 class="district-title">Quest Arena</h3>
+                    <p class="district-desc">Transform daily tasks and goals into epic quests. Level up your character by completing real-life missions.</p>
+                </div>
+                
+                <div class="district-card">
+                    <div class="district-icon">🌸</div>
+                    <h3 class="district-title">Connection Hub</h3>
+                    <p class="district-desc">Build meaningful relationships in private circles. Share story fragments without public pressure.</p>
+                </div>
+                
+                <div class="district-card">
+                    <div class="district-icon">📖</div>
+                    <h3 class="district-title">Memory Library</h3>
+                    <p class="district-desc">Your journey is saved as interactive episodes. Relive and reflect on your story arcs anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="character-section" id="character">
+        <div class="character-creator">
+            <h2 class="section-title">Create Your Avatar</h2>
+            <div class="avatar-preview">🧙</div>
+            <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 30px;">
+                Your anime persona evolves with your journey. Choose your starting energy:
+            </p>
+            
+            <div class="mood-tracker">
+                <h3 style="margin-bottom: 20px;">How are you feeling today?</h3>
+                <div class="mood-options">
+                    <button class="mood-btn" onclick="selectMood('hopeful')">✨ Hopeful</button>
+                    <button class="mood-btn" onclick="selectMood('anxious')">😰 Anxious</button>
+                    <button class="mood-btn" onclick="selectMood('determined')">💪 Determined</button>
+                    <button class="mood-btn" onclick="selectMood('tired')">😴 Tired</button>
+                    <button class="mood-btn" onclick="selectMood('curious')">🔍 Curious</button>
+                </div>
+                <div id="mood-result" style="margin-top: 30px; font-size: 1.2rem; min-height: 60px;"></div>
+            </div>
+            
+            <button class="cta-button" style="margin-top: 40px;" onclick="startJourney()">Enter InnerArc</button>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2026 InnerArc | Mental Wellness Meets Storytelling | Built for Gen Z</p>
+        <p style="margin-top: 10px; opacity: 0.5;">Your story. Your universe. Your arc.</p>
+    </footer>
+
+    <script>
+        function generateStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        let selectedMood = null;
+        function selectMood(mood) {
+            selectedMood = mood;
+            const moodMessages = {
+                'hopeful': 'Your arc begins with light! The universe senses your optimism. ✨',
+                'anxious': 'Every hero faces doubt. Your story includes overcoming this challenge. 💙',
+                'determined': 'The warrior spirit awakens! Your willpower will shape your path. ⚡',
+                'tired': 'Rest is part of the journey. Your next arc will focus on restoration. 🌙',
+                'curious': 'The seeker emerges! Discovery and growth await you. 🔮'
+            };
+            document.getElementById('mood-result').innerHTML = 
+                `<p style="color: #4facfe;">${moodMessages[mood]}</p>`;
+        }
+
+        function startJourney() {
+            if (!selectedMood) {
+                alert('Please select your current mood first! 🎭');
+                return;
+            }
+            alert('Welcome to InnerArc! 🌟\n\nYour personal universe is being created...\nThis is a demo - the full experience is coming soon!');
+        }
+
+        generateStars();
+    </script>
+</body>
+</html>
